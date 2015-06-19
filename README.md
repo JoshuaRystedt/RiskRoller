@@ -16,4 +16,4 @@ python path-to-file
 - Options for retreating from battle given at strategic points
 - A fully functional iOS application written in Swift
 
-If you are a Python or Swift developper or an UI designer and want to contribute to this project contact Joshua Rystedt.
+If you are a Python or Swift developper or an UI designer and want to contribute to this project contact Joshua Rystedt on Twitter: @JoshuaRystedt
