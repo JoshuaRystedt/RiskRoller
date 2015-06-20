@@ -14,7 +14,7 @@ RiskRoller is currently in version 2
 # How to run application
 python directoryPath/RiskRoller.py
 
-# A glipse into the future of RiskRoller:
+# A glipse into the future of RiskRoller
 - Options for retreating from battle given at strategic points (coming in RiskRoller v. 3)
 - A fully functional iOS application written in Swift
 
