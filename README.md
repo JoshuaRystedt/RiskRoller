@@ -11,8 +11,15 @@ RiskRoller is currently in version 2
 <https://www.python.org>
 - Download RiskRoller and save to your Applications directory.
 
-python directoryPath/RiskRoller.py
+## How to run application
+In your terminal run:
 
+```
+python directoryPath/RiskRoller.py
+```
+
+## A glipse into the future of RiskRoller
 - Options for retreating from battle given at strategic points (coming in RiskRoller v. 3)
 - A fully functional iOS application written in Swift
 
+If you are a Python or Swift developper or an UI designer and want to contribute to this project contact Joshua Rystedt on Twitter: [@JoshuaRystedt](https://twitter.com/JoshuaRystedt)
