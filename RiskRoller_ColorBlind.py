@@ -18,8 +18,9 @@
 #
 #   To read a copy of the GNU General Public License see <http://www.gnu.org/licenses/>.
 
-# Import randint function from random
-from random import randint
+# Imports
+from random import randint, choice
+from sys import exit
 
 # The Attacker's number of dice
 def calc_attack_dice(armies):
@@ -140,45 +141,125 @@ def calc_def_casual (attacker_armies, defender_armies, attacker_roll_result, def
 
     return defender_armies
 
-# Run RiskRoller
-print
-attacker_armies = int(raw_input("How many armies are attacking? "))
-defender_armies = int(raw_input("How many armies are defending? "))
-print
-print "----------------------------"
-print
-while attacker_armies > 0 and defender_armies > 0:
-    attacker_roll_result = attacker_rolls(calc_attack_dice(attacker_armies))
-    defender_roll_result = defender_rolls(calc_defence_dice(defender_armies))
-    attacker_armies = calc_att_casual(attacker_armies,
-                defender_armies,
-                attacker_roll_result,
-                defender_roll_result)
-    defender_armies = calc_def_casual(attacker_armies,
-                defender_armies,
-                attacker_roll_result,
-                defender_roll_result)
+def victory(attacker_armies, defender_armies):
+    if attacker_armies == 0:
+        if defender_armies == 1:
+            defarmystring = "army"
+        else:
+            defarmystring = "armies"
+        print "The defender wins!"
+        print "* With " + str(defender_armies) + " " + defarmystring + " remaining"
+        print
+        print "----------------------------"
+        print
+        exit(0)
+    elif defender_armies == 0:
+        if attacker_armies == 1:
+            attarmystring = "army"
+        else:
+            attarmystring = "armies"
+        print "The attacker wins!"
+        print "* With " + str(attacker_armies) + " " + attarmystring + " remaining"
+        print
+        print "----------------------------"
+        print
+        exit(0)
+    else:
+        if defender_armies == 1:
+            defarmystring = "army"
+        else:
+            defarmystring = "armies"
+        if attacker_armies == 1:
+            attarmystring = "army"
+        else:
+            attarmystring = "armies"
+        print "The defender wins!"
+        print "* With " + str(defender_armies) + " " + defarmystring + " remaining"
+        print
+        print "The attacker retreated..."
+        print "* With " + str(attacker_armies) + " " + attarmystring + " remaining"
+        print
+        print "----------------------------"
+        print
+        exit(0)
+
+# Give the attacker the option to retreat when battle is no longer in his favor
+def retreatOption(attacker_armies, defender_armies):
+    retreatResponses = ["Attacker, would you like to retreat? ",
+                        "Attacker, your armies are being annihilated! Would you like to retreat? ",
+                        "Attacker, things are looking bleak... Would you like to retreat? ",
+                        "Attacker, don't push your luck. Would you like to retreat? ",
+                        "Attacker, you are losing! Want to retreat? "]
+
+    if attacker_armies == 1:
+        attArmyString = "army"
+    else:
+        attArmyString = "armies"
+
+    if defender_armies == 1:
+        defArmyString = "army"
+    else:
+        defArmyString = "armies"
+
+    if attacker_armies <= defender_armies:
+        print
+        userIntention = raw_input(choice(retreatResponses))
+        userIntention = userIntention.lower()
+        if "y" in userIntention:
+            retreat = True
+            return retreat
+        elif "n" in userIntention:
+            retreat = False
+            return retreat
+        else:
+            print "Error! Please enter either yes or no."
+            retreat = "Error"
+            return retreat
+    else:
+        retreat = False
+        return retreat
+
+def retreatActual(attacker_armies, defender_armies):
+    retreat = retreatOption(attacker_armies, defender_armies)
+    if retreat == True:
+        print
+        print "----------------------------"
+        print
+        victory(attacker_armies,defender_armies)
+    elif retreat == False:
+        pass
+    elif retreat == "Error":
+        retreatActual(attacker_armies,defender_armies)
+    else:
+        print "An unexpected error occurred"
+        exit(1)
     print
     print "----------------------------"
     print
-else:
-    if attacker_armies == 0:
-        if defender_armies == 1:
-            armystring = "army"
-        else:
-            armystring = "armies"
-        print "The defender wins!"
-        print "* With " + str(defender_armies) + " " + armystring + " remaining"
-        print
-        print "----------------------------"
-        print
-    elif defender_armies == 0:
-        if attacker_armies == 1:
-            armystring = "army"
-        else:
-            armystring = "armies"
-        print "The attacker wins!"
-        print "* With " + str(attacker_armies) + " " + armystring + " remaining"
-        print
-        print "----------------------------"
-        print
+
+
+# Run RiskRoller
+def roll():
+    print
+    attacker_armies = int(raw_input("How many armies are attacking? "))
+    defender_armies = int(raw_input("How many armies are defending? "))
+    print
+    print "----------------------------"
+    print
+    while attacker_armies > 0 and defender_armies > 0:
+        attacker_roll_result = attacker_rolls(calc_attack_dice(attacker_armies))
+        defender_roll_result = defender_rolls(calc_defence_dice(defender_armies))
+        attacker_armies = calc_att_casual(attacker_armies,
+                    defender_armies,
+                    attacker_roll_result,
+                    defender_roll_result)
+        defender_armies = calc_def_casual(attacker_armies,
+                    defender_armies,
+                    attacker_roll_result,
+                    defender_roll_result)
+        retreatActual(attacker_armies, defender_armies)
+    else:
+        victory(attacker_armies, defender_armies)
+
+# Execute
+roll()
