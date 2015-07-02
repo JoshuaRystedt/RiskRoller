@@ -202,13 +202,20 @@ def victory(attacker_armies, defender_armies):
         exit(0)
 
 # Give the attacker the option to retreat when battle is no longer in his favor
+def skipRetreatOption(attacker_armies, defender_armies):
+    skipRetreat = False
+    if attacker_armies <= 0 or defender_armies <= 0:
+        skipRetreat = True
+    else:
+        pass
+        return skipRetreat
+
 def retreatOption(attacker_armies, defender_armies):
     retreatResponses = ["Attacker, would you like to retreat? ",
                         "Attacker, your armies are being annihilated! Would you like to retreat? ",
                         "Attacker, things are looking bleak... Would you like to retreat? ",
                         "Attacker, don't push your luck. Would you like to retreat? ",
                         "Attacker, you are losing! Want to retreat? "]
-
     if attacker_armies <= defender_armies:
         print
         userIntention = raw_input(choice(retreatResponses))
@@ -228,22 +235,25 @@ def retreatOption(attacker_armies, defender_armies):
         return retreat
 
 def retreatActual(attacker_armies, defender_armies):
-    retreat = retreatOption(attacker_armies, defender_armies)
-    if retreat is True:
-        print
-        print "----------------------------"
-        print
-        victory(attacker_armies,defender_armies)
-    elif retreat is False:
-        pass
-    elif retreat == "Error":
-        retreatActual(attacker_armies,defender_armies)
+    skipRetreat = skipRetreatOption(attacker_armies, defender_armies)
+    if skipRetreat is False:
+        retreat = retreatOption(attacker_armies, defender_armies)
+        if retreat is True:
+            print
+            print "----------------------------"
+            print
+            victory(attacker_armies,defender_armies)
+        elif retreat is False:
+            print
+            print "----------------------------"
+            print
+        elif retreat == "Error":
+            retreatActual(attacker_armies,defender_armies)
+        else:
+            print "An unexpected error occurred"
+            exit(1)
     else:
-        print "An unexpected error occurred"
-        exit(1)
-    print
-    print "----------------------------"
-    print
+        pass
 
 # Run RiskRoller
 def roll():
@@ -266,6 +276,9 @@ def roll():
                     defender_roll_result)
         retreatActual(attacker_armies, defender_armies)
     else:
+        print
+        print "----------------------------"
+        print
         victory(attacker_armies, defender_armies)
 
 # Execute
