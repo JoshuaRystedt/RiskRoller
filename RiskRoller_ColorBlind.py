@@ -22,6 +22,27 @@
 from random import randint, choice
 from sys import exit
 
+# User input
+def getAttArmies():
+    inputError = True
+    while inputError is True:
+        try:
+            attacker_armies = int(raw_input("How many armies are attacking? "))
+            inputError = False
+            return attacker_armies
+        except:
+            print("Error! Please enter a valid integer.")
+
+def getDefArmies():
+    inputError = True
+    while inputError is True:
+        try:
+            defender_armies = int(raw_input("How many armies are defending? "))
+            inputError = False
+            return defender_armies
+        except:
+            print("Error! Please enter a valid integer.")
+
 # The Attacker's number of dice
 def calc_attack_dice(armies):
     if armies >= 3:
@@ -191,28 +212,18 @@ def retreatOption(attacker_armies, defender_armies):
                         "Attacker, don't push your luck. Would you like to retreat? ",
                         "Attacker, you are losing! Want to retreat? "]
 
-    if attacker_armies == 1:
-        attArmyString = "army"
-    else:
-        attArmyString = "armies"
-
-    if defender_armies == 1:
-        defArmyString = "army"
-    else:
-        defArmyString = "armies"
-
     if attacker_armies <= defender_armies:
         print
         userIntention = raw_input(choice(retreatResponses))
         userIntention = userIntention.lower()
-        if "y" in userIntention:
+        if "yes" in userIntention:
             retreat = True
             return retreat
-        elif "n" in userIntention:
+        elif "no" in userIntention:
             retreat = False
             return retreat
         else:
-            print "Error! Please enter either yes or no."
+            print "Error! Please enter either \"yes\" or \"no\"."
             retreat = "Error"
             return retreat
     else:
@@ -221,12 +232,12 @@ def retreatOption(attacker_armies, defender_armies):
 
 def retreatActual(attacker_armies, defender_armies):
     retreat = retreatOption(attacker_armies, defender_armies)
-    if retreat == True:
+    if retreat is True:
         print
         print "----------------------------"
         print
         victory(attacker_armies,defender_armies)
-    elif retreat == False:
+    elif retreat is False:
         pass
     elif retreat == "Error":
         retreatActual(attacker_armies,defender_armies)
@@ -237,12 +248,11 @@ def retreatActual(attacker_armies, defender_armies):
     print "----------------------------"
     print
 
-
 # Run RiskRoller
 def roll():
     print
-    attacker_armies = int(raw_input("How many armies are attacking? "))
-    defender_armies = int(raw_input("How many armies are defending? "))
+    attacker_armies = getAttArmies()
+    defender_armies = getDefArmies()
     print
     print "----------------------------"
     print
