@@ -211,7 +211,7 @@ def skipRetreatOption(attacker_armies, defender_armies):
         skipRetreat = True
     else:
         pass
-        return skipRetreat
+    return skipRetreat
 
 def retreatOption(attacker_armies, defender_armies):
     retreatResponses = ["Attacker, would you like to retreat? ",
