@@ -21,7 +21,7 @@ Alternatively:
 	cd directoryPath
 	python RiskRoller.py
 
-### Windows users:
+### Windows Users:
 In Command Prompt run:
 
 	python directoryPath\RiskRoller_ColorBlind.py
